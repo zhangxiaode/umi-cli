@@ -1,5 +1,5 @@
 export default [
-  { path: '/login', component: 'login' },
+  { path: '/login', component: '@/pages/login/index' },
   {
     path: '/',
     component: '@/layouts/index',

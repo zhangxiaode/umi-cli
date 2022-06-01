@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { connect } from 'dva';
 import { Layout, Menu } from 'antd';
 const { Sider } = Layout;
 import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
   UserOutlined,
   VideoCameraOutlined,
   UploadOutlined,
@@ -11,11 +10,17 @@ import {
 import classnames from 'classnames';
 import styles from './index.less';
 
-export default (props: any) => {
-  const [collapsed, setCollapsed] = useState(false);
+export default connect((props: any) => {
+  return {
+    collapse: props.sider.collapse
+  }
+})((props: any) => {
+  const { collapse } = props; 
   return (
-    <Sider collapsible collapsed={collapsed}>
-      <img className={classnames(styles.logo, 'flex')} src={require('@/assets/logo.png')} />
+    <Sider collapsed={ collapse } className={styles.sider}>
+      <div className={classnames(styles.logo, 'flex jc-center ai-center')}>
+        <img className={styles.icon} src={require('@/assets/logo.png')} />
+      </div>
       <Menu
         theme="dark"
         mode="inline"
@@ -40,4 +45,4 @@ export default (props: any) => {
       />
     </Sider>
   );
-}
+})
