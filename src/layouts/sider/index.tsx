@@ -1,14 +1,12 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import { connect } from 'dva';
 import { Layout, Menu } from 'antd';
 const { Sider } = Layout;
-import {
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-} from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+type MenuItem = Required<MenuProps>['items'][number];
 import classnames from 'classnames';
 import styles from './index.less';
+import routes from '@config/routes';
 
 export default connect((props: any) => {
   return {
@@ -16,6 +14,33 @@ export default connect((props: any) => {
   }
 })((props: any) => {
   const { collapse } = props; 
+  const [current, setCurrent] = useState('10000001');
+  const permissions = [10000000, 10000001, 10000002, 10000010, 10000011, 10000012]
+  const formatRoute = (menus: Array<any>): MenuItem[] => {
+    menus = menus.map((item: any) => {
+      if(item.routes && item.routes.length > 0) {
+        item.routes = formatRoute(item.routes)
+      }
+      return item
+    })
+    return menus.filter((item: any) => item.meta && !item.meta.hidden && permissions.includes(item.meta.code)).map(item => {
+      return {
+        key: item.meta.key,
+        icon: item.meta.icon ? <img src={item.meta.icon} /> : undefined,
+        label: item.title,
+        children: item.routes && item.routes.length > 0 ? item.routes : undefined,
+        type: undefined // item.routes && item.routes.length > 0 ? undefined : 'group'
+      }
+    })
+  } 
+  let menus = formatRoute(routes)
+
+  const onClick: MenuProps['onClick'] = e => {
+    setCurrent(e.key);
+    console.log(current)
+    console.log(menus)
+  };
+
   return (
     <Sider collapsed={ collapse } className={styles.sider}>
       <div className={classnames(styles.logo, 'flex jc-center ai-center')}>
@@ -24,24 +49,11 @@ export default connect((props: any) => {
       <Menu
         theme="dark"
         mode="inline"
-        defaultSelectedKeys={['1']}
-        items={[
-          {
-            key: '1',
-            icon: <UserOutlined />,
-            label: 'nav 1',
-          },
-          {
-            key: '2',
-            icon: <VideoCameraOutlined />,
-            label: 'nav 2',
-          },
-          {
-            key: '3',
-            icon: <UploadOutlined />,
-            label: 'nav 3',
-          },
-        ]}
+        onClick={onClick}
+        defaultOpenKeys={['10000001']}
+        selectedKeys={[current]}
+        defaultSelectedKeys={[current]}
+        items={ menus }
       />
     </Sider>
   );

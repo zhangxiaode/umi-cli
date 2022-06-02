@@ -1,9 +1,9 @@
 import styles from './index.less';
 
-export default function AdminPage() {
+export default function LoginPage() {
   return (
     <div>
-      <h1 className={styles.title}>admin</h1>
+      <h1 className={styles.title}>login</h1>
     </div>
   );
 }

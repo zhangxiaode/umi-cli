@@ -3,7 +3,6 @@ import Sider from './sider/index'
 import Header from './header/index'
 import Footer from './footer/index'
 const { Content } = Layout;
-import styles from './index.less';
 
 export default (props: any) => (
   <Layout>

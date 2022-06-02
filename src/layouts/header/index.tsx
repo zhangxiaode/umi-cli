@@ -12,16 +12,11 @@ export default connect((props: any) => {
   }
 })((props: any) => {
   const { collapse } = props; 
-  // const [collapse, setCollapsed] = useState(false)
-  // const handleCollapse = (collapse: Boolean) => {
-  //   console.log(123, collapse)
-  //   setCollapsed(!collapse)
-  // }
   const handleCollapse = () => {
     const { dispatch } = props; 
     dispatch({
-      type: 'sider/changeCollapse',   // namespace/方法名
-      payload: {},   // 参数
+      type: 'sider/changeCollapse',
+      payload: {},
     });
   }
   return (
