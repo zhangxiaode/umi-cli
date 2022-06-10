@@ -14,7 +14,7 @@ export default connect((props: any) => {
   }
 })((props: any) => {
   const { collapse } = props; 
-  const [openKeys, setOpenKeys] = useState('Goods');
+  const [openKeys, setOpenKeys] = useState([]);
   const [current, setCurrent] = useState('GoodsList');
   const permissions = [10000000, 10000001, 10000002, 10000010, 10000011, 10000012]
   const formatRoute = (menus: Array<any>): MenuItem[] => {
@@ -37,14 +37,15 @@ export default connect((props: any) => {
   let menus = formatRoute(routes)
 
   const onOpenChange: MenuProps['onOpenChange'] = (e: string[]) => {
-    console.log(111, e)
-    setOpenKeys(e[e.length - 1]);
-    console.log(222, openKeys)
-    console.log(menus)
+    // console.log(111, e)
+    setOpenKeys(e);
+    console.log(e, openKeys)
+    // console.log(222, openKeys)
+    // console.log(menus)
   };
 
   const onSelect: MenuProps['onSelect'] = (e: any) => {
-    console.log(333, e)
+    // console.log(333, e)
     setCurrent(e.key);
     // console.log(e.item)
     // console.log(menus)
@@ -60,8 +61,8 @@ export default connect((props: any) => {
         mode="inline"
         onOpenChange={onOpenChange}
         onSelect={onSelect}
-        defaultOpenKeys={[openKeys]}
-        // openKeys={[openKeys]}
+        defaultOpenKeys={openKeys}
+        openKeys={openKeys}
         defaultSelectedKeys={[current]}
         selectedKeys={[current]}
         items={ menus }
