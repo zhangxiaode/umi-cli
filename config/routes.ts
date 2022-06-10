@@ -21,7 +21,7 @@ export default [
     title: '用户管理',
     meta: {
       key: 'User',
-      icon: require('@/assets/logo.png'),
+      icon: 'assets/logo.png',
       code: 10000000
     },
     routes: [
@@ -49,7 +49,7 @@ export default [
         exact: true, 
         title: '用户详情',
         meta: {
-          key: 'UserList',
+          key: 'UserDetail',
           code: 10000002,
           hidden: true
         },
@@ -79,7 +79,7 @@ export default [
     title: '商品管理',
     meta: {
       key: 'Goods',
-      icon: require('@/assets/404.png'),
+      icon: 'assets/404.png',
       code: 10000010
     },
     routes: [

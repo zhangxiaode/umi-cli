@@ -14,7 +14,8 @@ export default connect((props: any) => {
   }
 })((props: any) => {
   const { collapse } = props; 
-  const [current, setCurrent] = useState('10000001');
+  const [openKeys, setOpenKeys] = useState('Goods');
+  const [current, setCurrent] = useState('GoodsList');
   const permissions = [10000000, 10000001, 10000002, 10000010, 10000011, 10000012]
   const formatRoute = (menus: Array<any>): MenuItem[] => {
     menus = menus.map((item: any) => {
@@ -26,7 +27,7 @@ export default connect((props: any) => {
     return menus.filter((item: any) => item.meta && !item.meta.hidden && permissions.includes(item.meta.code)).map(item => {
       return {
         key: item.meta.key,
-        icon: item.meta.icon ? <img src={item.meta.icon} /> : undefined,
+        icon: item.meta.icon ? (<img src={require(`@/${item.meta.icon}`)} /> ) : undefined,
         label: item.title,
         children: item.routes && item.routes.length > 0 ? item.routes : undefined,
         type: undefined // item.routes && item.routes.length > 0 ? undefined : 'group'
@@ -35,10 +36,18 @@ export default connect((props: any) => {
   } 
   let menus = formatRoute(routes)
 
-  const onClick: MenuProps['onClick'] = e => {
-    setCurrent(e.key);
-    console.log(current)
+  const onOpenChange: MenuProps['onOpenChange'] = (e: string[]) => {
+    console.log(111, e)
+    setOpenKeys(e[e.length - 1]);
+    console.log(222, openKeys)
     console.log(menus)
+  };
+
+  const onSelect: MenuProps['onSelect'] = (e: any) => {
+    console.log(333, e)
+    setCurrent(e.key);
+    // console.log(e.item)
+    // console.log(menus)
   };
 
   return (
@@ -49,10 +58,12 @@ export default connect((props: any) => {
       <Menu
         theme="dark"
         mode="inline"
-        onClick={onClick}
-        defaultOpenKeys={['10000001']}
-        selectedKeys={[current]}
+        onOpenChange={onOpenChange}
+        onSelect={onSelect}
+        defaultOpenKeys={[openKeys]}
+        // openKeys={[openKeys]}
         defaultSelectedKeys={[current]}
+        selectedKeys={[current]}
         items={ menus }
       />
     </Sider>
