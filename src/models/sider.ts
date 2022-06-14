@@ -1,11 +1,18 @@
 export default {
   namespace: 'sider',
   state: {
-    collapse: false
+    collapse: false,
+    openKeys: []
   },
   reducers: {
     changeCollapse(state: any) {
       state.collapse = !state.collapse
+      return {
+        ...state
+      }
+    },
+    changeOpenKeys(state: any, action: any) {
+      state.openKeys = action.payload.openKeys
       return {
         ...state
       }
